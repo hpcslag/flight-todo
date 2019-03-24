@@ -1,0 +1,388 @@
+/* main styles*/
+body,
+html {
+    background: #e6e6e6;
+    font-family: 'Source Sans Pro', sans-serif;
+}
+
+input {
+    cursor: pointer;
+}
+
+.f-input {
+    display: inline-block;
+    padding: 0.6em 1em;
+    border: none;
+    font-size: 1.2em;
+    outline: none;
+    /*box-shadow: 0 0 1em 0.25em rgba(0,0,0,0.2);*/
+    color: #7b7b7b;
+    border-radius: 0.2em;
+    background: #e6e6e6;
+}
+
+.f-input:hover {
+    color: #000 !important;
+    background: #ccc;
+}
+
+.sel {
+    font-size: 0.9em;
+    width: 80px;
+    color: #848484;
+}
+
+.sel-date {
+    width: 188px;
+    display: -webkit-inline-box;
+}
+
+#origin,
+#dest {
+    vertical-align: middle;
+}
+
+#origin {
+    margin-right: 25px;
+}
+
+.f-input::placeholder {
+    color: #848484;
+}
+
+#od-sec {
+    width: fit-content;
+    margin: 2em auto;
+    display: inline-block;
+    height: 70px;
+    line-height: 70px;
+}
+
+#sel-datetime {
+    width: 212px;
+    display: inline-block;
+    height: 171px;
+    vertical-align: middle;
+    margin-left: 25px;
+}
+
+#information {
+    vertical-align: top;
+    background: #fff;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    margin: 0px auto;
+    width: fit-content;
+}
+
+#information input:checked {
+    background: #2aa1c0;
+}
+
+#travel-type {
+    width: fit-content;
+    display: inline-block;
+    margin-left: 25px;
+    vertical-align: middle;
+}
+
+.add-data {
+    margin-left: 25px;
+    vertical-align: middle;
+    display: inline-block;
+    fill: #d0d0d0;
+    cursor: pointer;
+}
+
+.add-data:hover {
+    fill: #848484;
+}
+
+#code * {
+    margin-bottom: 0px;
+}
+
+.price-sec {
+    display: inline-block;
+    margin-left: 25px;
+    vertical-align: middle;
+}
+
+.pick-sec {
+    width: fit-content;
+    margin: 0px auto;
+    padding: 35px;
+}
+
+.side {
+    float: left;
+    width: 540px;
+}
+
+.side:first-child {
+    margin-right: 60px;
+}
+
+.flight-sec {
+    background: white;
+    margin-bottom: 25px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+}
+
+.f {
+    width: 350px;
+    display: inline-block;
+    border-right: 1px solid #d2d2d2;
+    padding: 15px 25px;
+}
+
+.flight-price-sec {
+    display: inline-block;
+    margin-left: 25px;
+    vertical-align: top;
+    position: relative;
+    top: 15px;
+    margin: 15px 25px;
+}
+
+.flight-price-sec h1 {
+    margin: 0px;
+}
+
+.flight-sec * {
+    user-select: none;
+    /* supported by Chrome and Opera */
+    -webkit-user-select: none;
+    /* Safari */
+    -khtml-user-select: none;
+    /* Konqueror HTML */
+    -moz-user-select: none;
+    /* Firefox */
+    -ms-user-select: none;
+    /* Internet Explorer/Edge */
+    /* https://stackoverflow.com/questions/10867506/dragleave-of-parent-element-fires-when-dragging-over-children-elements */
+    pointer-events: none;
+}
+
+.flight-date {
+    font-weight: bold;
+    color: #9a9a9a;
+    text-shadow: 0 1px #fff;
+}
+
+.outbound-date {
+    font-size: 1em;
+    padding: 5px 10px;
+    background: #477754;
+    color: white;
+    width: fit-content;
+}
+
+.return-date {
+    font-size: 1em;
+    padding: 5px 10px;
+    background: #474877;
+    color: white;
+    width: fit-content;
+}
+
+.date-sec {
+    margin-top: 40px;
+}
+
+.outer-container {
+    margin-top: 35px;
+}
+
+/* dependency */
+
+.control-group {
+    display: inline-block;
+    vertical-align: top;
+    background: #fff;
+    text-align: left;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    width: 200px;
+    height: 210px;
+    margin: 10px;
+}
+
+.control {
+    display: block;
+    position: relative;
+    padding-left: 30px;
+    margin-bottom: 15px;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.control input {
+    position: absolute;
+    z-index: -1;
+    opacity: 0;
+}
+
+.control__indicator {
+    position: absolute;
+    top: 2px;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    background: #e6e6e6;
+}
+
+.control--radio .control__indicator {
+    border-radius: 50%;
+}
+
+.control:hover input~.control__indicator,
+.control input:focus~.control__indicator {
+    background: #ccc;
+}
+
+.control input:checked~.control__indicator {
+    background: #2aa1c0;
+}
+
+.control:hover input:not([disabled]):checked~.control__indicator,
+.control input:checked:focus~.control__indicator {
+    background: #0e647d;
+}
+
+.control input:disabled~.control__indicator {
+    background: #e6e6e6;
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.control__indicator:after {
+    content: '';
+    position: absolute;
+    display: none;
+}
+
+.control input:checked~.control__indicator:after {
+    display: block;
+}
+
+.control--checkbox .control__indicator:after {
+    left: 8px;
+    top: 4px;
+    width: 3px;
+    height: 8px;
+    border: solid #fff;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.control--checkbox input:disabled~.control__indicator:after {
+    border-color: #7b7b7b;
+}
+
+.control--radio .control__indicator:after {
+    left: 7px;
+    top: 7px;
+    height: 6px;
+    width: 6px;
+    border-radius: 50%;
+    background: #fff;
+}
+
+.control--radio input:disabled~.control__indicator:after {
+    background: #7b7b7b;
+}
+
+.flight-duration {
+    max-width: 430px;
+    margin: -14px auto 0 auto;
+    text-align: center;
+    font-size: 12px;
+    color: rgba(0, 0, 0, 0.4);
+    position: relative;
+    z-index: 4;
+}
+
+.flight-info * {
+    font-family: Helvetica, Arial, sans-serif;
+}
+
+.flight-info {
+    position: relative;
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+    max-width: 430px;
+    margin: 0 auto;
+    border-collapse: collapse;
+}
+
+.flight-info:after {
+    content: '';
+    width: 100%;
+    height: 1px;
+    position: absolute;
+    top: 20px;
+    display: block;
+    background: #666;
+    z-index: 0;
+}
+
+.flight-info .segments {
+    display: table-row;
+}
+
+.flight-info .segments>div {
+    display: table-cell;
+    text-align: center;
+    position: relative;
+}
+
+.flight-info .segments .airport {
+    display: block;
+    font-size: 12px;
+    color: rgba(0, 0, 0, 0.4);
+}
+
+.flight-info .segments .airport:only-child {
+    line-height: 40px;
+}
+
+.flight-info .segments .plane {
+    width: 36px;
+    height: 36px;
+    background-color: #fff;
+    position: absolute;
+    display: block;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 0;
+    background-image: url("data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmlld0JveD0iMCAwIDUwIDI1Ij48cGF0aCBkPSJNNDYuMiwxMS4zYy0wLjktMS43LTMtMi4yLTQuNy0xLjNsLTEwLjcsNi4zbC0xNi02LjZsLTMuNSwyTDIyLDIxLjZMMTIuNiwyN0wyLjIsMjUuM0wwLDI2LjZsOC40LDYuN2wwLDBsMCwwbDAsMGwwLDBjNC44LTAuMyw1LjUtMC40LDgtMC42TDQ0LjksMTZDNDYuNSwxNS4xLDQ3LjEsMTMsNDYuMiwxMS4zeiIgc3R5bGU9ImZpbGw6IHJnYigxMTgsIDExOCwgMTE4KTsiLz48L3N2Zz4=");
+    background-size: 50% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: 2;
+}
+
+.flight-info .segments time {
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 40px;
+}
+
+.flight-info .segments .segment {
+    width: 60px;
+    background: #fff;
+    position: relative;
+    z-index: 3;
+    padding: 0 8px;
+}
+
+.flight-info .segments .departure {
+    padding: 0 8px 0 0;
+}
+
+.flight-info .segments .destination {
+    padding: 0 0 0 8px;
+}
