@@ -1,37 +1,37 @@
 <div>
     <div class="outer-container">
         <div id="information">
-            <form action="#">
+            <form action="#" #f="ngForm" autocomplete="off">
                 <div id="od-sec">
-                    <input type="text" class="f-input" id="origin" placeholder="Origin">
-                    <input type="text" class="f-input" id="dest" placeholder="Destination">
-                </div>
+                    <div class="autocomplete"><input class="f-input" id="origin" [(ngModel)]="flight.origin" placeholder="Origin" (keyup)="flight.origin=flight.origin.toUpperCase()" name="origin" required/></div>
+                    <div class="autocomplete"><input class="f-input" id="dest" [(ngModel)]="flight.dest" placeholder="Destination" name="dest" required/></div>
+                  </div>
 
                 <div id="sel-datetime">
                     <label><p>Select Date-Time</p></label>
-                    <input type="date" class="f-input sel sel-date" placeholder="Date">
-                    <input type="time" class="f-input sel" placeholder="Time-start">
-                    <input type="time" class="f-input sel" placeholder="Time-end">
+                    <input type="date" class="f-input sel sel-date" [(ngModel)]="flight.date" placeholder="Date" name="dest">
+                    <input type="time" class="f-input sel" placeholder="Time-start" [(ngModel)]="flight.tstart" name="tstart">
+                    <input type="time" class="f-input sel" placeholder="Time-end" [(ngModel)]="flight.tend" style="margin-left: 5px;" name="tend">
                 </div>
 
 
                 <div id="travel-type">
                     <label class="control control--radio">
-                                <input type="radio" name="travel-type" value="Outbound"> Outbound
+                                <input type="radio" name="travel-type" [(ngModel)]="flight.outbound" value="Outbound" name="isoutbound" checked> Outbound
                             <div class="control__indicator"></div>
                         </label>
                     <label class="control control--radio">
-                                <input type="radio" name="travel-type" value="Return"> Return
+                                <input type="radio" name="travel-type" value="Return" name="isoutbound"> Return
                             <div class="control__indicator"></div>
                         </label>
                 </div>
 
-                <input type="number" min-value="0" class="f-input price-sec" placeholder="Price">
+                <input type="number" min-value="0" class="f-input price-sec" [(ngModel)]="flight.price" placeholder="Price" name="price">
 
                 <div class="add-data">
-                    <svg height="40px" width="40px" version="1.1" viewBox="0 0 16 16" x="0px" y="0px">
-                            <path clip-rule="evenodd" d="M2,7h5v-5h2v5h5v2h-5v5h-2v-5h-5z" fill-rule="evenodd"></path>
-                        </svg>
+                    <svg height="40px" width="40px" version="1.1" viewBox="0 0 16 16" x="0px" y="0px" (click)="addNewFlight(f)">
+                      <path clip-rule="evenodd" d="M2,7h5v-5h2v5h5v2h-5v5h-2v-5h-5z" fill-rule="evenodd"></path>
+                    </svg>
                 </div>
             </form>
             <div id="code">
@@ -39,37 +39,45 @@
             </div>
         </div>
     </div>
+    <!-- list-manager -->
     <div class="pick-sec">
         <div class="side">
             <h1 class="outbound-date">Outbound</h1>
             <div class="date-sec">
-                <div class="flight-date">
-                    <p>Flight at 2019-03-24</p>
-                </div>
+                {{ sortByDate() }}
+                <div *ngFor="let item of filterTypeForData(TravelType.Outbound); let index = index;">
+                  <div *ngIf="filterTypeForData(TravelType.Outbound)[index-1] == null || (filterTypeForData(TravelType.Outbound)[index-1].datestart.toString()) != (item.datestart.toString()); else dateFilter">
+                      <div class="flight-date">
+                          <p>Flight at {{ item.datestart.getFullYear() + "-" + (item.datestart.getMonth() + 1) + "-" + item.datestart.getDate() }}</p>
+                      </div>
+                  </div>
+                  <ng-template #dateFilter>
+                  </ng-template>
 
-                <div class="flight-sec" draggable="true" ondragstart="dragstart(event)" ondragover="dragover(event)" ondrop="drop(event)">
-                    <div class="f">
-                        <div class="flight-info">
-                            <div class="segments">
-                                <div class="segment departure">
-                                    <time>KHH</time>
-                                    <span class="airport">8:00 AM(UTC+8)</span>
-                                </div>
-                                <div class="divider adaptive">
-                                    <span class="plane"></span>
-                                </div>
-                                <div class="segment destination">
-                                    <time>HKG</time>
-                                    <span class="airport">9:25 AM(UTC+8)</span>
+                    <div class="flight-sec" draggable="true" ondragstart="dragstart(event)" ondragover="dragover(event)" ondrop="drop(event)" *ngIf="item.type == TravelType.Outbound">
+                        <div class="f">
+                            <div class="flight-info">
+                                <div class="segments">
+                                    <div class="segment departure">
+                                        <time>{{ item.from }}</time>
+                                        <span class="airport">{{ item.datestart.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true, timeZoneName:'short' })}}</span>
+                                    </div>
+                                    <div class="divider adaptive">
+                                        <span class="plane"></span>
+                                    </div>
+                                    <div class="segment destination">
+                                        <time>{{ item.to }}</time>
+                                        <span class="airport">{{ item.dateend.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true, timeZoneName:'short' })}}</span>
+                                    </div>
                                 </div>
                             </div>
+                            <div class="flight-duration">
+                                1h 20min Length of trip
+                            </div>
                         </div>
-                        <div class="flight-duration">
-                            1h 20min Length of trip
+                        <div class="flight-price-sec">
+                            <h1>{{ item.price }}</h1>
                         </div>
-                    </div>
-                    <div class="flight-price-sec">
-                        <h1>6,740</h1>
                     </div>
                 </div>
             </div>
@@ -77,149 +85,43 @@
         <div class="side">
             <h1 class="return-date">Return</h1>
             <div class="date-sec">
-                <div class="flight-date">
-                    <p>Flight at 2019-03-24</p>
-                </div>
+                {{ sortByDate() }}
+                <div *ngFor="let item of filterTypeForData(TravelType.Return); let index = index;">
+                  <div *ngIf="filterTypeForData(TravelType.Outbound)[index-1] == null || (filterTypeForData(TravelType.Outbound)[index-1].datestart.toString()) != (item.datestart.toString()); else dateFilter">
+                      <div class="flight-date">
+                          <p>Flight at {{ item.datestart.getFullYear() + "-" + (item.datestart.getMonth()+1) + "-" + item.datestart.getDate() }}</p>
+                      </div>
+                  </div>
+                  <ng-template #dateFilter>
+                  </ng-template>
 
-                <div class="flight-sec" draggable="true" ondragstart="dragstart(event)" ondragover="dragover(event)" ondrop="drop(event)">
-                    <div class="f">
-                        <div class="flight-info">
-                            <div class="segments">
-                                <div class="segment departure">
-                                    <time>KHH</time>
-                                    <span class="airport">8:00 AM(UTC+8)</span>
-                                </div>
-                                <div class="divider adaptive">
-                                    <span class="plane"></span>
-                                </div>
-                                <div class="segment destination">
-                                    <time>HKG</time>
-                                    <span class="airport">9:25 AM(UTC+8)</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flight-duration">
-                            1h 20min Length of trip
-                        </div>
-                    </div>
-                    <div class="flight-price-sec">
-                        <h1>6,740</h1>
-                    </div>
-                </div>
-                <div class="flight-sec" draggable="true" ondragstart="dragstart(event)" ondragover="dragover(event)" ondrop="drop(event)">
-                    <div class="f">
-                        <div class="flight-info">
-                            <div class="segments">
-                                <div class="segment departure">
-                                    <time>KHH</time>
-                                    <span class="airport">8:00 AM(UTC+8)</span>
-                                </div>
-                                <div class="divider adaptive">
-                                    <span class="plane"></span>
-                                </div>
-                                <div class="segment destination">
-                                    <time>HKG</time>
-                                    <span class="airport">9:25 AM(UTC+8)</span>
+                    <div class="flight-sec" draggable="true" ondragstart="dragstart(event)" ondragover="dragover(event)" ondrop="drop(event)">
+                        <div class="f">
+                            <div class="flight-info">
+                                <div class="segments">
+                                    <div class="segment departure">
+                                        <time>{{ item.from }}</time>
+                                        <span class="airport">{{ item.datestart.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true, timeZoneName:'short' })}}</span>
+                                    </div>
+                                    <div class="divider adaptive">
+                                        <span class="plane"></span>
+                                    </div>
+                                    <div class="segment destination">
+                                        <time>{{ item.to }}</time>
+                                        <span class="airport">{{ item.dateend.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true, timeZoneName:'short' })}}</span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="flight-duration">
-                            1h 20min Length of trip
-                        </div>
-                    </div>
-                    <div class="flight-price-sec">
-                        <h1>9,340</h1>
-                    </div>
-                </div>
-            </div>
-
-            <div class="date-sec">
-                <div class="flight-date">
-                    <p>Flight at 2019-03-24</p>
-                </div>
-
-                <div class="flight-sec" draggable="true" ondragstart="dragstart(event)" ondragover="dragover(event)" ondrop="drop(event)">
-                    <div class="f">
-                        <div class="flight-info">
-                            <div class="segments">
-                                <div class="segment departure">
-                                    <time>KHH</time>
-                                    <span class="airport">8:00 AM(UTC+8)</span>
-                                </div>
-                                <div class="divider adaptive">
-                                    <span class="plane"></span>
-                                </div>
-                                <div class="segment destination">
-                                    <time>HKG</time>
-                                    <span class="airport">9:25 AM(UTC+8)</span>
-                                </div>
+                            <div class="flight-duration">
+                                1h 20min Length of trip
                             </div>
                         </div>
-                        <div class="flight-duration">
-                            1h 20min Length of trip
+                        <div class="flight-price-sec">
+                            <h1>{{ item.price }}</h1>
                         </div>
-                    </div>
-                    <div class="flight-price-sec">
-                        <h1>6,740</h1>
-                    </div>
-                </div>
-                <div class="flight-sec" draggable="true" ondragstart="dragstart(event)" ondragover="dragover(event)" ondrop="drop(event)">
-                    <div class="f">
-                        <div class="flight-info">
-                            <div class="segments">
-                                <div class="segment departure">
-                                    <time>KHH</time>
-                                    <span class="airport">8:00 AM(UTC+8)</span>
-                                </div>
-                                <div class="divider adaptive">
-                                    <span class="plane"></span>
-                                </div>
-                                <div class="segment destination">
-                                    <time>HKG</time>
-                                    <span class="airport">9:25 AM(UTC+8)</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flight-duration">
-                            1h 20min Length of trip
-                        </div>
-                    </div>
-                    <div class="flight-price-sec">
-                        <h1>9,340</h1>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<script type="text/javascript">
-    function dragstart(e) {
-        //start drag
-        source = e.target;
-        //set data
-        e.dataTransfer.setData("text/plain", e.target.innerHTML);
-        //specify allowed transfer
-        e.dataTransfer.effectAllowed = "move";
-
-        console.log(JSON.stringify(e.target.innerHTML))
-    }
-
-    function dragover(e) {
-        //drag over
-        e.preventDefault();
-        //specify operation
-        e.dataTransfer.dropEffect = "move";
-
-        console.log("over");
-    }
-
-    function drop(e) {
-        //drop
-        e.preventDefault();
-        e.stopPropagation();
-        //update text in dragged item
-        source.innerHTML = e.target.innerHTML;
-        //update text in drop target
-        e.target.innerHTML = e.dataTransfer.getData("text/plain");
-    }
-</script>
