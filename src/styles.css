@@ -196,8 +196,8 @@ input {
     margin-top: 35px;
 }
 
-.display-board *{
-    pointer-events: none;
+.date-sec *{ /* for move object*/
+
 }
 
 /* dependency */

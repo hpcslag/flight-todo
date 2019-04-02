@@ -32,6 +32,7 @@
             e.dataTransfer.dropEffect = "move";
 
             console.log("over");
+            console.log(e.target.parentNode.parentNode);
         }
 
         function drop(e) {
@@ -39,10 +40,10 @@
             e.preventDefault();
             e.stopPropagation();
             //update text in dragged item
-            
+
             //swap feature
             source.innerHTML = e.target.innerHTML;
-            
+
             //update text in drop target
             //give css limit
             e.target.innerHTML =  e.dataTransfer.getData("text/plain");

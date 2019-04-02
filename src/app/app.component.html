@@ -46,6 +46,7 @@
             <div class="date-sec">
                 {{ sortByDate() }}
                 <div *ngFor="let item of filterTypeForData(TravelType.Outbound); let index = index;">
+                  {{ sortByDate() }}
                   <div *ngIf="filterTypeForData(TravelType.Outbound)[index-1] == null || (filterTypeForData(TravelType.Outbound)[index-1].datestart.toString()) != (item.datestart.toString()); else dateFilter">
                       <div class="flight-date">
                           <p>Flight at {{ item.datestart.getFullYear() + "-" + (item.datestart.getMonth() + 1) + "-" + item.datestart.getDate() }}</p>
@@ -87,6 +88,7 @@
             <div class="date-sec">
                 {{ sortByDate() }}
                 <div *ngFor="let item of filterTypeForData(TravelType.Return); let index = index;">
+                  {{ sortByDate() }}
                   <div *ngIf="filterTypeForData(TravelType.Outbound)[index-1] == null || (filterTypeForData(TravelType.Outbound)[index-1].datestart.toString()) != (item.datestart.toString()); else dateFilter">
                       <div class="flight-date">
                           <p>Flight at {{ item.datestart.getFullYear() + "-" + (item.datestart.getMonth()+1) + "-" + item.datestart.getDate() }}</p>
