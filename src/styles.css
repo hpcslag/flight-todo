@@ -196,6 +196,10 @@ input {
     margin-top: 35px;
 }
 
+.display-board *{
+    pointer-events: none;
+}
+
 /* dependency */
 
 .control-group {

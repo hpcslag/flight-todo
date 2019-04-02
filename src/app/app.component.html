@@ -4,12 +4,12 @@
             <form action="#" #f="ngForm" autocomplete="off">
                 <div id="od-sec">
                     <div class="autocomplete"><input class="f-input" id="origin" [(ngModel)]="flight.origin" placeholder="Origin" (keyup)="flight.origin=flight.origin.toUpperCase()" name="origin" required/></div>
-                    <div class="autocomplete"><input class="f-input" id="dest" [(ngModel)]="flight.dest" placeholder="Destination" name="dest" required/></div>
+                    <div class="autocomplete"><input class="f-input" id="dest" [(ngModel)]="flight.dest" placeholder="Destination" (keyup)="flight.dest=flight.dest.toUpperCase()" name="dest" required/></div>
                   </div>
 
                 <div id="sel-datetime">
                     <label><p>Select Date-Time</p></label>
-                    <input type="date" class="f-input sel sel-date" [(ngModel)]="flight.date" placeholder="Date" name="dest">
+                    <input type="date" class="f-input sel sel-date" [(ngModel)]="flight.date" placeholder="Date" name="date">
                     <input type="time" class="f-input sel" placeholder="Time-start" [(ngModel)]="flight.tstart" name="tstart">
                     <input type="time" class="f-input sel" placeholder="Time-end" [(ngModel)]="flight.tend" style="margin-left: 5px;" name="tend">
                 </div>
@@ -17,13 +17,13 @@
 
                 <div id="travel-type">
                     <label class="control control--radio">
-                                <input type="radio" name="travel-type" [(ngModel)]="flight.outbound" value="Outbound" name="isoutbound" checked> Outbound
-                            <div class="control__indicator"></div>
-                        </label>
+                      <input type="radio" name="travel-type" [value]="true" [(ngModel)]="flight.isoutbound" name="isoutbound" checked> Outbound
+                      <div class="control__indicator"></div>
+                    </label>
                     <label class="control control--radio">
-                                <input type="radio" name="travel-type" value="Return" name="isoutbound"> Return
-                            <div class="control__indicator"></div>
-                        </label>
+                      <input type="radio" name="travel-type" [value]="false" [(ngModel)]="flight.isoutbound" name="isoutbound"> Return
+                      <div class="control__indicator"></div>
+                    </label>
                 </div>
 
                 <input type="number" min-value="0" class="f-input price-sec" [(ngModel)]="flight.price" placeholder="Price" name="price">

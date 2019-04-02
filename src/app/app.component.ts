@@ -79,6 +79,21 @@ export class AppComponent implements OnInit{
   ]
 
   ngOnInit() {
+    window.addEventListener("fieldChange",(e)=>{
+      //field change
+      //rerender element
+
+    });
+
+    this.flight = {
+      origin : "TLV",
+      dest : "HKG",
+      date : "2019/03-31",
+      tstart : "09:24",
+      tend: "11:24",
+      isoutbound: true,
+      price: 2719
+    }
   }
 
   public sortByDate(): void {
@@ -114,14 +129,17 @@ export class AppComponent implements OnInit{
 
     let fdata = {
       flight_id: this.id_count++,
-      from: this.flight.origin,
-      to: this.flight.dest,
+      from: this.flight.origin.toString().toUpperCase(),
+      to: this.flight.dest.toString().toUpperCase(),
       datestart: dateStart,
       dateend: dataEnd,
-      type: this.flight.isoutbound ? travel_type.Outbound : travel_type.Return,
+      type: (this.flight.isoutbound ? travel_type.Outbound : travel_type.Return),
       price: this.flight.price
     }
+
     this.data.push(fdata);
+    this.sortByDate();
+
     /*this.flight = {
       origin : "",
       dest : "",
