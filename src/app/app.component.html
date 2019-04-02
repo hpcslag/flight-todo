@@ -35,7 +35,7 @@
                 </div>
             </form>
             <div id="code">
-                <p>Standard: ICAO (click change to IATA).</p>
+                <p>Standard: ICAO.</p>
             </div>
         </div>
     </div>
@@ -55,7 +55,7 @@
                   <ng-template #dateFilter>
                   </ng-template>
 
-                    <div class="flight-sec" draggable="true" ondragstart="dragstart(event)" ondragover="dragover(event)" ondrop="drop(event)" *ngIf="item.type == TravelType.Outbound">
+                    <div class="flight-sec" [attr.flight_id]="item.flight_id" travel_type="outbound" draggable="true" ondragstart="dragstart(event)" ondragover="dragover(event)" ondrop="drop(event)" *ngIf="item.type == TravelType.Outbound">
                         <div class="f">
                             <div class="flight-info">
                                 <div class="segments">
@@ -97,7 +97,7 @@
                   <ng-template #dateFilter>
                   </ng-template>
 
-                    <div class="flight-sec" draggable="true" ondragstart="dragstart(event)" ondragover="dragover(event)" ondrop="drop(event)">
+                    <div class="flight-sec" [attr.flight_id]="item.flight_id" travel_type="return" draggable="true" ondragstart="dragstart(event)" ondragover="dragover(event)" ondrop="drop(event)">
                         <div class="f">
                             <div class="flight-info">
                                 <div class="segments">

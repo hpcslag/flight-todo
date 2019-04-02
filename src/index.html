@@ -16,13 +16,10 @@
     <script type="text/javascript">
         function dragstart(e) {
             //start drag
-            source = e.target;
-            //set data
-            e.dataTransfer.setData("text/plain", e.target.innerHTML);
+            source = parseInt(e.target.getAttribute("flight_id"));
+
             //specify allowed transfer
             e.dataTransfer.effectAllowed = "move";
-
-            console.log(JSON.stringify(e.target.innerHTML))
         }
 
         function dragover(e) {
@@ -30,23 +27,24 @@
             e.preventDefault();
             //specify operation
             e.dataTransfer.dropEffect = "move";
-
-            console.log("over");
-            console.log(e.target.parentNode.parentNode);
         }
 
         function drop(e) {
             //drop
             e.preventDefault();
             e.stopPropagation();
-            //update text in dragged item
 
-            //swap feature
-            source.innerHTML = e.target.innerHTML;
+            dest = e.target.getAttribute("travel_type");
 
-            //update text in drop target
-            //give css limit
-            e.target.innerHTML =  e.dataTransfer.getData("text/plain");
+            let event = new CustomEvent('dragEvent',{
+                detail : {
+                    flight_id : source,
+                    dest_type : dest
+                }
+            });
+            window.dispatchEvent(event);
+
+            source,dest = null;
         }
 
         let countries = ["HKG","KHH"];

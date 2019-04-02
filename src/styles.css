@@ -59,11 +59,12 @@ input {
 }
 
 #sel-datetime {
-    width: 212px;
+    width: 220px;
     display: inline-block;
     height: 171px;
     vertical-align: middle;
     margin-left: 25px;
+    text-align: center;
 }
 
 #information {
@@ -196,8 +197,9 @@ input {
     margin-top: 35px;
 }
 
-.date-sec *{ /* for move object*/
-
+.flight-date{
+    /* date section disable select */
+    pointer-events: none;
 }
 
 /* dependency */

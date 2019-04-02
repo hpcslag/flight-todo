@@ -79,13 +79,20 @@ export class AppComponent implements OnInit{
   ]
 
   ngOnInit() {
-    window.addEventListener("fieldChange",(e)=>{
+    window.addEventListener("dragEvent",(e : any)=>{
       //field change
-      //rerender element
+      console.log(e.detail.flight_id);
+      console.log(e.detail.dest_type);
+
+      this.data.map( x => {
+        if(x.flight_id == e.detail.flight_id){
+          x.type = (e.detail.dest_type == "return" ? travel_type.Return : travel_type.Outbound);
+        }
+      })
 
     });
 
-    this.flight = {
+    /*this.flight = {
       origin : "TLV",
       dest : "HKG",
       date : "2019/03-31",
@@ -93,7 +100,7 @@ export class AppComponent implements OnInit{
       tend: "11:24",
       isoutbound: true,
       price: 2719
-    }
+    }*/
   }
 
   public sortByDate(): void {
@@ -140,7 +147,7 @@ export class AppComponent implements OnInit{
     this.data.push(fdata);
     this.sortByDate();
 
-    /*this.flight = {
+    this.flight = {
       origin : "",
       dest : "",
       date : null,
@@ -148,7 +155,7 @@ export class AppComponent implements OnInit{
       tend: null,
       isoutbound: true,
       price: 0
-    };*/
+    };
   }
 
   public deleteFlight(flight_id: number){
