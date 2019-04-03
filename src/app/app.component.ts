@@ -29,15 +29,6 @@ export class AppComponent implements OnInit{
   };
 
   id_count: number = 0;
-  /*flight: {
-    origin : string,
-    dest : string,
-    date : any,
-    tstart : any,
-    tend: any,
-    isoutbound: boolean,
-    price: number
-  };*/
 
   data = [
     {
@@ -92,15 +83,15 @@ export class AppComponent implements OnInit{
 
     });
 
-    /*this.flight = {
+    this.flight = {
       origin : "TLV",
       dest : "HKG",
-      date : "2019/03-31",
+      date : "2019-03-31",
       tstart : "09:24",
       tend: "11:24",
       isoutbound: true,
       price: 2719
-    }*/
+    }
   }
 
   public sortByDate(): void {
@@ -123,12 +114,12 @@ export class AppComponent implements OnInit{
 
   public addNewFlight(){
     let dateStart = new Date(this.flight.date);
-    dateStart.setHours(this.flight.tstart.split(":")[0]);
-    dateStart.setHours(this.flight.tstart.split(":")[1]);
+    dateStart.setHours(parseInt(this.flight.tstart.split(":")[0]));
+    dateStart.setMinutes(parseInt(this.flight.tstart.split(":")[1]));
 
     let dataEnd = new Date(this.flight.date);
-    dataEnd.setHours(this.flight.tend.split(":")[0]);
-    dataEnd.setHours(this.flight.tend.split(":")[1]);
+    dataEnd.setHours(parseInt(this.flight.tend.split(":")[0]));
+    dataEnd.setMinutes(parseInt(this.flight.tend.split(":")[1]));
 
     if(dateStart.toLocaleString('en-US', { hour12: true, timeZoneName:'short'}).toString() == "PM" && dataEnd.toLocaleString('en-US', { hour12: true, timeZoneName:'short'}).toString() == "AM"){
       dataEnd = new Date(dataEnd.setDate(dataEnd.getDate() + 1));
@@ -159,11 +150,18 @@ export class AppComponent implements OnInit{
   }
 
   public deleteFlight(flight_id: number){
-
+    console.log(flight_id);
+    this.data.map((x, i)=>{
+      if(x.flight_id == flight_id){
+        this.data.splice(i, 1);
+      }
+    });
   }
 
-  /*deleteFlight(flight_id: number){
-    //search and splice.
-    this.return_sort_by_date.splice(0, 2);
-  }*/
+  public getDistanceTime(dt1, dt2) : string{
+    let diff =(dt2.getTime() - dt1.getTime()) / 1000;
+    diff /= 60;
+    let totalTime = Math.abs(Math.round(diff));
+    return `${totalTime / 60}h ${totalTime % 60}min Length of trip`;
+  }
 }

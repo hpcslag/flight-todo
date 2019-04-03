@@ -202,6 +202,37 @@ input {
     pointer-events: none;
 }
 
+.delete {
+  position: absolute;
+  display: inline-block;
+
+  z-index: 100;
+}
+
+.delete * {
+  pointer-events: visible;
+}
+
+.delete span{
+  background: #de5d5d;
+  position: relative;
+  padding: 2px 6px;
+  border-radius: 60px;
+  text-align: center;
+  font-size: 16px;
+  left: -10px;
+  top: -8px;
+  color: white;
+}
+
+.delete span:hover{
+  background: #b54646;
+}
+
+.delete span:active{
+  background: #692b2b;
+}
+
 /* dependency */
 
 .control-group {
